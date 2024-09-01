@@ -35,10 +35,6 @@ They are the equivalent of perps for options
 
 ### Some visualisations
 
-If we use the same _`mark_price`_ from perp's simulation, we get something like this
-
-<img src="./ev-option-for-same-mark.png" alt="$0 Call" width="800"/>
-
-If we simulate a seperate _`put_price`_ then we get this,
+If we simulate a _`put_price`_ then we get this, (this is very wrong since put price is random, TODO)
 
 <img src="./simulated-put.png" alt="$0 Call" width="800"/>
