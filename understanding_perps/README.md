@@ -19,6 +19,43 @@ _credits: claude 3.5_
 
 <img src="./funding-rate-perp.png" alt="Funding Rate Visualization" width="800"/>
 
+## How drift calculates their funding rate %
+
+```python
+funding_rate_perc = 1/24 * (market_twap - oracle_twap) / oracle_twap
+```
+
+- _`market_twap`_ is calculated as `(bid_twap + ask_twap) / 2`
+- oracle_twap is most likely taken care of by pricing oracle being used, pyth most likely in this case
+- Instead of paying funding once a day, drift breaks it down across the day by paying 1/24th the amount end of every hour
+
+### TWAP
+
+- Short for time-weighted average price
+- Average price of a security over a specified time
+- $\text{TWAP} = \frac{\sum_{i=1}^{n} P_i \cdot t_i}{\sum_{i=1}^{n} t_i}$
+
+Where:
+
+- $P_i$ is the price at interval $i$
+- $t_i$ is the time duration of interval $i$
+- $n$ is the number of intervals
+
+Note:
+
+- Increased period of measurements results in a less up-to-date price
+
+### Funding rate as APR and APY
+
+(specific to just drift)
+
+- $\text{APR} = {rate} * 24 * 365.25$
+- $\text{APY} = ({1+rate}) ^ {24 * 365.25} - 1$
+
+If we compare APY when funding fees is paid every hour vs daily, we get something like this:
+
+<img src="./drift-fees-comparison.png" alt="Drift's funding APY comparison" width="800"/>
+
 ## Everlasting options
 
 They are the equivalent of perps for options
